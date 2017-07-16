@@ -1,0 +1,25 @@
+#数据库连接配置
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/gank
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+  thymeleaf:
+    mode: HTML5
+  #字符集和json格式工具
+  http:
+    encoding:
+      charset: utf-8
+    converters:
+      preferred-json-mapper: jackson
+    multipart:
+      max-file-size: 10MB
+  application:
+    name: gank
+
+
+
+
+
+
