@@ -14,7 +14,7 @@ import javax.persistence.Table;
 /**
  * Created by qings on 2017/7/16.
  */
-@Document(indexName = CommonProperties.INDEX_NAME, type = CommonProperties.TYPE)
+@Document(indexName = CommonProperties.INDEX_NAME, type = CommonProperties.TYPE, replicas = 0)
 public class Article {
 
     @Id
@@ -26,6 +26,8 @@ public class Article {
     private String title;
     @Field(type = FieldType.String, index = FieldIndex.analyzed,store = true)
     private String author;
+    @Field(type = FieldType.String, index = FieldIndex.no,store = true)
+    private String publish;
     @Field(type = FieldType.String, index = FieldIndex.no,store = true)
     private String created;
     @Field(type = FieldType.String, index = FieldIndex.no,store = true)
@@ -63,12 +65,12 @@ public class Article {
         this.author = author;
     }
 
-    public String getCreated() {
-        return created;
+    public String getPublish() {
+        return publish;
     }
 
-    public void setCreated(String created) {
-        this.created = created;
+    public void setPublish(String publish) {
+        this.publish = publish;
     }
 
     public String getUrl() {
@@ -77,5 +79,13 @@ public class Article {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getCreated() {
+        return created;
+    }
+
+    public void setCreated(String created) {
+        this.created = created;
     }
 }
