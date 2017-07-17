@@ -5,7 +5,7 @@ package com.qings.elasticsearch.common;
  */
 public class CommonProperties {
 
-    public final static String INDEX_NAME = "article";
+    public final static String INDEX_NAME = "gank";
 
-    public final static String TYPE_17173 = "17173";
+    public final static String TYPE = "article";
 }

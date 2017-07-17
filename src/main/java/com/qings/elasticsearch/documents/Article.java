@@ -14,7 +14,7 @@ import javax.persistence.Table;
 /**
  * Created by qings on 2017/7/16.
  */
-@Document(indexName = CommonProperties.INDEX_NAME, type = CommonProperties.TYPE_17173)
+@Document(indexName = CommonProperties.INDEX_NAME, type = CommonProperties.TYPE)
 public class Article {
 
     @Id
