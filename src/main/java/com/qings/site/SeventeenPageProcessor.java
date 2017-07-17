@@ -3,17 +3,21 @@ package com.qings.site;
 import com.qings.elasticsearch.common.CommonProperties;
 import com.qings.robots.RobotsDisallowedException;
 import com.qings.robots.RobotsParser;
+import com.qings.site.common.CustomPipeline;
 import com.qings.site.common.SitePageProcessor;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.log4j.Logger;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
+import us.codecraft.webmagic.Spider;
+import us.codecraft.webmagic.pipeline.ConsolePipeline;
 import us.codecraft.webmagic.processor.PageProcessor;
 import us.codecraft.webmagic.selector.Html;
 import us.codecraft.webmagic.selector.Selectable;
 
 import java.net.MalformedURLException;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by qings on 2017/7/16.
@@ -69,13 +73,21 @@ public class SeventeenPageProcessor extends SitePageProcessor implements PagePro
                     page.addTargetRequests(page.getHtml().links().regex(URL_POST2).all());
                 }else{
 //                    到达内容页
-                    Selectable select = page.getUrl();
-                    Html html = page.getHtml();
-                    page.putField("site_name", CommonProperties.TYPE_ARTICLE);
-                    page.putField("url",select.get());
-                    page.putField("title",html.getDocument().title());
-                    page.putField("publish",html.getDocument().getElementsByClass("gb-final-date").eachText().get(0).replace("时间：",""));
-                    page.putField("author",html.getDocument().getElementsByClass("gb-final-author").eachText().get(0).replace("作者：",""));
+                    try {
+                        Selectable select = page.getUrl();
+                        Html html = page.getHtml();
+                        page.putField("site_name", "17173");
+                        page.putField("url", select.get());
+                        page.putField("title", html.getDocument().title());
+                        List<String> introList = html.getDocument().getElementsByClass("gb-final-mod-summary").eachText();
+                        List<String> publishList = html.getDocument().getElementsByClass("gb-final-date").eachText();
+                        List<String> authorList = html.getDocument().getElementsByClass("gb-final-author").eachText();
+                        page.putField("introduction", !introList.isEmpty()?introList.get(0).replace("王者荣耀新闻导语 ", ""):null);
+                        page.putField("publish", !publishList.isEmpty()?publishList.get(0).replace("时间：", ""):null);
+                        page.putField("author", !authorList.isEmpty()?authorList.get(0).replace("作者：", ""):null);
+                    }catch (Exception e){
+                        logger.error(e);
+                    }
                 }
             }
         } catch (MalformedURLException e) {
@@ -88,4 +100,7 @@ public class SeventeenPageProcessor extends SitePageProcessor implements PagePro
         return site;
     }
 
+    public static void main(String[] args){
+        Spider.create(new SeventeenPageProcessor()).addPipeline(new ConsolePipeline()).addUrl(SeventeenPageProcessor.URL_LIST).thread(3).run();
+    }
 }

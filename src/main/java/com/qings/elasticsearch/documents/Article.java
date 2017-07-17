@@ -1,12 +1,11 @@
 package com.qings.elasticsearch.documents;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.qings.elasticsearch.common.CommonProperties;
 import org.springframework.data.elasticsearch.annotations.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
 
 /**

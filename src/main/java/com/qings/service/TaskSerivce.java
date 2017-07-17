@@ -27,7 +27,7 @@ public class TaskSerivce {
     @Autowired
     private ArticleRepository articleRepository;
 
-//    @Scheduled(cron = "0 0/1 * * * ?")
+    @Scheduled(cron = "0 0 0 * * ?")
     public void task(){
         logger.info("开始执行定时任务");
         Spider.create(new SeventeenPageProcessor()).addPipeline(new CustomPipeline(articleRepository)).addUrl(SeventeenPageProcessor.URL_LIST).thread(3).run();

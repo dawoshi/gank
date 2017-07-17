@@ -10,9 +10,6 @@ import java.util.Map;
 /**
  * Created by qings on 2017/7/17.
  */
-@XmlRootElement
-@JsonPropertyOrder({"cursor","count","action","path","uri","status","error",
-        "errorDescription","errorUri","exception","params","list","data" })
 public class ApiResponse {
 
     private Integer cursor;
