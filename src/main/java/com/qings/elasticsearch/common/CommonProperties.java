@@ -7,5 +7,7 @@ public class CommonProperties {
 
     public final static String INDEX_NAME = "gank";
 
-    public final static String TYPE = "article";
+    public final static String TYPE_ARTICLE = "article";
+
+    public final static String TYPE_USER = "user";
 }

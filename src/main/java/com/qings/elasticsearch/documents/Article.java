@@ -12,7 +12,7 @@ import java.util.Date;
 /**
  * Created by qings on 2017/7/16.
  */
-@Document(indexName = CommonProperties.INDEX_NAME, type = CommonProperties.TYPE, replicas = 0)
+@Document(indexName = CommonProperties.INDEX_NAME, type = CommonProperties.TYPE_ARTICLE, replicas = 0)
 public class Article {
 
     @Id

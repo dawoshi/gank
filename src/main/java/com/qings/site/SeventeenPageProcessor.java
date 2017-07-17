@@ -71,7 +71,7 @@ public class SeventeenPageProcessor extends SitePageProcessor implements PagePro
 //                    到达内容页
                     Selectable select = page.getUrl();
                     Html html = page.getHtml();
-                    page.putField("site_name", CommonProperties.TYPE);
+                    page.putField("site_name", CommonProperties.TYPE_ARTICLE);
                     page.putField("url",select.get());
                     page.putField("title",html.getDocument().title());
                     page.putField("publish",html.getDocument().getElementsByClass("gb-final-date").eachText().get(0).replace("时间：",""));
