@@ -19,7 +19,7 @@ public class Article {
     @Column
     private String author;
     @Column
-    private String created;
+    private String publish;
     @Column
     private String url;
 
@@ -55,12 +55,12 @@ public class Article {
         this.author = author;
     }
 
-    public String getCreated() {
-        return created;
+    public String getPublish() {
+        return publish;
     }
 
-    public void setCreated(String created) {
-        this.created = created;
+    public void setPublish(String publish) {
+        this.publish = publish;
     }
 
     public String getUrl() {
