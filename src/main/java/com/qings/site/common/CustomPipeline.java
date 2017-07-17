@@ -1,13 +1,14 @@
 package com.qings.site.common;
 
 import com.qings.dao.ArticleDao;
-import com.qings.entities.Article;
+import com.qings.elasticsearch.documents.Article;
+import com.qings.elasticsearch.repository.ArticleRepository;
 import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import us.codecraft.webmagic.ResultItems;
 import us.codecraft.webmagic.Task;
 import us.codecraft.webmagic.pipeline.Pipeline;
 
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -16,9 +17,14 @@ import java.util.UUID;
 public class CustomPipeline implements Pipeline {
 
     private ArticleDao articleDao;
+    private ArticleRepository articleRepository;
 
     public CustomPipeline(ArticleDao articleDao){
         this.articleDao = articleDao;
+    }
+
+    public CustomPipeline(ArticleRepository articleRepository){
+        this.articleRepository = articleRepository;
     }
 
     @Override
@@ -33,6 +39,8 @@ public class CustomPipeline implements Pipeline {
         article.setPublish(resultItems.get("created"));
         article.setSitename(resultItems.get("site_name"));
         article.setUrl(resultItems.get("url"));
-        articleDao.save(article);
+        article.setCreated(new Date());
+//        articleDao.save(article);
+        articleRepository.save(article);
     }
 }

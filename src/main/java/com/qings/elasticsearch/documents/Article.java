@@ -1,15 +1,13 @@
 package com.qings.elasticsearch.documents;
 
 import com.qings.elasticsearch.common.CommonProperties;
-import org.springframework.data.elasticsearch.annotations.Document;
-import org.springframework.data.elasticsearch.annotations.Field;
-import org.springframework.data.elasticsearch.annotations.FieldIndex;
-import org.springframework.data.elasticsearch.annotations.FieldType;
+import org.springframework.data.elasticsearch.annotations.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Date;
 
 /**
  * Created by qings on 2017/7/16.
@@ -28,10 +26,20 @@ public class Article {
     private String author;
     @Field(type = FieldType.String, index = FieldIndex.no,store = true)
     private String publish;
-    @Field(type = FieldType.String, index = FieldIndex.no,store = true)
-    private String created;
+    @Field(type = FieldType.String, index = FieldIndex.analyzed,store = true)
+    private String introduction;
+    @Field(type = FieldType.Date, index = FieldIndex.no,store = true)
+    private Date created;
     @Field(type = FieldType.String, index = FieldIndex.no,store = true)
     private String url;
+
+    public String getIntroduction() {
+        return introduction;
+    }
+
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction;
+    }
 
     public String getId() {
         return id;
@@ -81,11 +89,11 @@ public class Article {
         this.url = url;
     }
 
-    public String getCreated() {
+    public Date getCreated() {
         return created;
     }
 
-    public void setCreated(String created) {
+    public void setCreated(Date created) {
         this.created = created;
     }
 }
