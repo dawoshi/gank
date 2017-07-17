@@ -74,7 +74,7 @@ public class SeventeenPageProcessor extends SitePageProcessor implements PagePro
                     page.putField("site_name", CommonProperties.TYPE);
                     page.putField("url",select.get());
                     page.putField("title",html.getDocument().title());
-                    page.putField("created",html.getDocument().getElementsByClass("gb-final-date").eachText().get(0).replace("时间：",""));
+                    page.putField("publish",html.getDocument().getElementsByClass("gb-final-date").eachText().get(0).replace("时间：",""));
                     page.putField("author",html.getDocument().getElementsByClass("gb-final-author").eachText().get(0).replace("作者：",""));
                 }
             }
