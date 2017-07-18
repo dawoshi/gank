@@ -14,18 +14,12 @@ public class ApiResponse {
 
     private Integer cursor;
     private Integer count;
-    private String action;
-    private String path;
-    private String uri;
-    private String status;
-    private String error;
     private String errorDescription;
-    private String errorUri;
-    private String exception;
     private Integer pages;
     private Map<String, List<String>> params;
     private List<Article> list;
     private Object data;
+    private Integer code;
 
     public Integer getPages() {
         return pages;
@@ -51,68 +45,12 @@ public class ApiResponse {
         this.count = count;
     }
 
-    public String getAction() {
-        return action;
-    }
-
-    public void setAction(String action) {
-        this.action = action;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
-
-    public String getUri() {
-        return uri;
-    }
-
-    public void setUri(String uri) {
-        this.uri = uri;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getError() {
-        return error;
-    }
-
-    public void setError(String error) {
-        this.error = error;
-    }
-
     public String getErrorDescription() {
         return errorDescription;
     }
 
     public void setErrorDescription(String errorDescription) {
         this.errorDescription = errorDescription;
-    }
-
-    public String getErrorUri() {
-        return errorUri;
-    }
-
-    public void setErrorUri(String errorUri) {
-        this.errorUri = errorUri;
-    }
-
-    public String getException() {
-        return exception;
-    }
-
-    public void setException(String exception) {
-        this.exception = exception;
     }
 
     public Map<String, List<String>> getParams() {
@@ -137,5 +75,13 @@ public class ApiResponse {
 
     public void setData(Object data) {
         this.data = data;
+    }
+
+    public Integer getCode() {
+        return code;
+    }
+
+    public void setCode(Integer code) {
+        this.code = code;
     }
 }

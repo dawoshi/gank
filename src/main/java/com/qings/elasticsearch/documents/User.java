@@ -1,6 +1,7 @@
 package com.qings.elasticsearch.documents;
 
 import com.qings.elasticsearch.common.CommonProperties;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldIndex;
@@ -30,6 +31,10 @@ public class User {
     private String heros;               //订阅的英雄咨询，以逗号分隔
     @Field(type = FieldType.Date, index = FieldIndex.no,store = true)
     private Date lastRemind;            //上一次提醒时间
+
+    public User(String id){
+        this.id = id;
+    }
 
     public Date getLastRemind() {
         return lastRemind;
