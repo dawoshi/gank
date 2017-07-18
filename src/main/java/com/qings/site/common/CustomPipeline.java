@@ -35,6 +35,7 @@ public class CustomPipeline implements Pipeline {
         Article article = new Article();
         article.setId(UUID.randomUUID().toString());
         article.setTitle(resultItems.get("title"));
+        article.setIntroduction(resultItems.get("introduction"));
         article.setAuthor(resultItems.get("author"));
         article.setPublish(resultItems.get("publish"));
         article.setSitename(resultItems.get("site_name"));

@@ -8,6 +8,7 @@ import org.apache.lucene.queryparser.flexible.core.builders.QueryBuilder;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.MultiMatchQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -41,7 +42,7 @@ public class IndexController {
 
     @RequestMapping("find")
     @ResponseBody
-    public ApiResponse findInformation(@RequestParam("param")String param, @RequestParam(value = "cursor", defaultValue = "0")Integer cursor){
+    public ApiResponse findInformation(@RequestParam(value = "param", defaultValue = "")String param, @RequestParam(value = "cursor", defaultValue = "0")Integer cursor){
         ApiResponse apiResponse = new ApiResponse();
         Page<Article> resultPage = null;
         if(StringUtils.isBlank(param.trim())){
@@ -50,7 +51,7 @@ public class IndexController {
             MultiMatchQueryBuilder multiMatchQueryBuilder = QueryBuilders.multiMatchQuery(param,"introduction","title","author","sitename");
             resultPage = articleRepository.search(multiMatchQueryBuilder, new PageRequest(cursor,MAX_RESULT, Sort.Direction.DESC,"publish"));
         }
-        if(null != resultPage && resultPage.getNumber()>0){
+        if(null != resultPage && !resultPage.getContent().isEmpty()){
             List<Article> articleList = resultPage.getContent();
             apiResponse.setCount(resultPage.getNumber());
             apiResponse.setList(articleList);

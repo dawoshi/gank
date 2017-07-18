@@ -1,5 +1,6 @@
 package com.qings.elasticsearch.config;
 
+import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
@@ -23,12 +24,15 @@ public class Config {
 
     @Bean
     public ElasticsearchOperations elasticsearchTemplate() {
-//        Client client = null;
-//        try {
-//            client = TransportClient.builder().build().addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("127.0.0.1"),9300));
-//        } catch (UnknownHostException e) {
-//            e.printStackTrace();
-//        }
+        Client client = null;
+        try {
+            client = TransportClient.builder().build().addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("127.0.0.1"),9300));
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+        SearchRequestBuilder searchRequestBuilder = client.prepareSearch("");
+        searchRequestBuilder.setHighlighterPreTags("<span style=\"color:red\">");
+        searchRequestBuilder.setHighlighterPostTags("</span>");
         return new ElasticsearchTemplate(nodeBuilder().local(true).node().client());
 //        return new ElasticsearchTemplate(client);
     }
