@@ -1,9 +1,7 @@
 package com.qings.site;
 
-import com.qings.elasticsearch.common.CommonProperties;
 import com.qings.robots.RobotsDisallowedException;
 import com.qings.robots.RobotsParser;
-import com.qings.site.common.CustomPipeline;
 import com.qings.site.common.SitePageProcessor;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.log4j.Logger;

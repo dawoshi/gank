@@ -1,36 +1,25 @@
 package com.qings.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.qings.common.ApiResponse;
 import com.qings.common.Heros;
+import com.qings.common.CommonProperties;
 import com.qings.elasticsearch.documents.Article;
 import com.qings.elasticsearch.documents.User;
 import com.qings.elasticsearch.repository.ArticleRepository;
 import com.qings.elasticsearch.repository.UserRepository;
+import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.logging.log4j.core.util.UuidUtil;
-import org.apache.lucene.queryparser.flexible.core.builders.QueryBuilder;
 import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.index.query.*;
-import org.elasticsearch.index.search.MatchQuery;
 import org.elasticsearch.search.SearchHit;
-import org.elasticsearch.search.aggregations.AbstractAggregationBuilder;
-import org.elasticsearch.search.aggregations.AggregationBuilders;
-import org.elasticsearch.search.aggregations.Aggregations;
-import org.elasticsearch.search.aggregations.bucket.terms.Terms;
-import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.highlight.HighlightBuilder;
-import org.elasticsearch.search.sort.SortBuilders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
-import org.springframework.data.elasticsearch.core.ResultsExtractor;
 import org.springframework.data.elasticsearch.core.SearchResultMapper;
 import org.springframework.data.elasticsearch.core.aggregation.AggregatedPage;
 import org.springframework.data.elasticsearch.core.aggregation.impl.AggregatedPageImpl;
@@ -44,8 +33,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by qings on 2017/7/17.
@@ -96,7 +83,7 @@ public class IndexController {
         if(null != resultPage && !resultPage.getContent().isEmpty()){
             List<Article> articleList = resultPage.getContent();
             apiResponse.setCount(resultPage.getNumber());
-            apiResponse.setList(articleList);
+            apiResponse.setList(new ArrayList<>(articleList));
             apiResponse.setPages(resultPage.getTotalPages());
             if(resultPage.hasNext()) apiResponse.setCursor(cursor+1);
             return apiResponse;
@@ -123,54 +110,53 @@ public class IndexController {
                 .withPageable(new PageRequest(0,MAX_RESULT, Sort.Direction.DESC,"publish")).build();
         Page<Article> resultPage = queryForPage(searchQuery);
         apiResponse.setCount(resultPage.getNumber());
-        apiResponse.setList(resultPage.getContent());
+        apiResponse.setList(new ArrayList<>(resultPage.getContent()));
         return apiResponse;
     }
 
-    private StringBuilder builder = new StringBuilder();
-    private List<String> resultList = Lists.newArrayList();
-
+    private List<String> heroList = new ArrayList<>(5);
     /**
      * 查询最近出现频率最高的几名英雄
      * @return
      */
-    @RequestMapping(value = "hotrank", method = RequestMethod.GET)
+    @RequestMapping(value = "hotheros", method = RequestMethod.GET)
     @ResponseBody
     public ApiResponse findHotHeros(){
         ApiResponse apiResponse = new ApiResponse();
-        if(builder.toString().isEmpty()){
-            Page<Article> resultPage = articleRepository.search(QueryBuilders.matchAllQuery(),new PageRequest(0,100, Sort.Direction.DESC,"publish"));
-            for(Article article:resultPage.getContent()){
-                builder.append(article.getTitle());
+        List<String> resultList = new ArrayList<>(5);
+        if(!heroList.isEmpty()) {
+            resultList = this.heroList;
+        }else{
+            Map<String, Long> herosMap = new HashedMap(Heros.heros.size());
+            for (String hero : Heros.heros) {
+                TermQueryBuilder termQueryBuilder = QueryBuilders.termQuery("introduction", hero);
+                NativeSearchQuery searchQuery = (new NativeSearchQueryBuilder()).withQuery(termQueryBuilder)
+                        .withIndices(CommonProperties.INDEX_NAME).withTypes(CommonProperties.TYPE_ARTICLE)
+                        .build();
+                long count = elasticsearchTemplate.count(searchQuery);
+                herosMap.put(hero, count);
             }
-        }
-        Map<String, Integer> map = Maps.newHashMap();
-        for(String hero: Heros.heros){
-            int count = 0;
-            Pattern p = Pattern.compile(hero);
-            Matcher m = p.matcher(builder.toString());
-            while (m.find()) {
-                count++;
-            }
-            map.put(hero,count);
-        }
-        List<Map.Entry<String, Integer>> entryList = new ArrayList<>(map.entrySet());
-        Collections.sort(entryList, new Comparator<Map.Entry<String, Integer>>() {
-            @Override
-            public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
-                if(o1.getValue() > o2.getValue()){
-                    return -1;
-                }else if(o1.getValue() < o2.getValue()){
-                    return 1;
+            List<Map.Entry<String, Long>> entryList = new ArrayList<>(herosMap.entrySet());
+            Collections.sort(entryList, new Comparator<Map.Entry<String, Long>>() {
+                @Override
+                public int compare(Map.Entry<String, Long> o1, Map.Entry<String, Long> o2) {
+                    if (o1.getValue() > o2.getValue()) {
+                        return -1;
+                    } else if (o1.getValue() < o2.getValue()) {
+                        return 1;
+                    }
+                    return 0;
                 }
-                return 0;
+            });
+            for (Map.Entry<String, Long> entry : entryList) {
+                if (resultList.size() == 3) {
+                    break;
+                }
+                resultList.add(entry.getKey());
             }
-        });
-        Iterator<Map.Entry<String, Integer>> it = entryList.subList(0,entryList.size()>5?5:entryList.size()).iterator();
-        while (it.hasNext()){
-            resultList.add(it.next().getKey());
+            heroList.addAll(resultList);
         }
-        apiResponse.setData(resultList);
+        apiResponse.setList(new ArrayList<>(resultList));
         return apiResponse;
     }
 

@@ -17,7 +17,7 @@ public class ApiResponse {
     private String errorDescription;
     private Integer pages;
     private Map<String, List<String>> params;
-    private List<Article> list;
+    private List<Object> list;
     private Object data;
     private Integer code;
 
@@ -61,11 +61,11 @@ public class ApiResponse {
         this.params = params;
     }
 
-    public List<Article> getList() {
+    public List<Object> getList() {
         return list;
     }
 
-    public void setList(List<Article> list) {
+    public void setList(List<Object> list) {
         this.list = list;
     }
 

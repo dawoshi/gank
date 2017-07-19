@@ -1,7 +1,6 @@
 package com.qings.elasticsearch.documents;
 
-import com.qings.elasticsearch.common.CommonProperties;
-import org.apache.commons.lang3.StringUtils;
+import com.qings.common.CommonProperties;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldIndex;

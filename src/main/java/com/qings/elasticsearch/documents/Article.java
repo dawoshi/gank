@@ -1,11 +1,9 @@
 package com.qings.elasticsearch.documents;
 
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.qings.elasticsearch.common.CommonProperties;
+import com.qings.common.CommonProperties;
 import org.springframework.data.elasticsearch.annotations.*;
 
 import javax.persistence.Id;
-import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
 
 /**
@@ -19,13 +17,13 @@ public class Article {
     private String id;
     @Field(type = FieldType.String, index = FieldIndex.not_analyzed,store = true)
     private String sitename;
-    @Field(type = FieldType.String, index = FieldIndex.analyzed,store = true)
+    @Field(type = FieldType.String, index = FieldIndex.analyzed,store = true,analyzer = "ik_max_word")
     private String title;
     @Field(type = FieldType.String, index = FieldIndex.analyzed,store = true)
     private String author;
     @Field(type = FieldType.String, index = FieldIndex.no,store = true)
     private String publish;
-    @Field(type = FieldType.String, index = FieldIndex.analyzed,store = true)
+    @Field(type = FieldType.String, index = FieldIndex.analyzed,store = true,analyzer = "ik_max_word")
     private String introduction;
     @Field(type = FieldType.Date, index = FieldIndex.no,store = true)
     private Date created;
