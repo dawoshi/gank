@@ -14,7 +14,4 @@ public class SitePageProcessor {
             .setSleepTime(100)
             .setUserAgent(USER_AGENT);
 
-    protected static String replaceHTML(String str){
-        return str!=null?str.replaceAll("\\<.*?>","").replaceAll("&nbsp;",""):"";
-    }
 }
