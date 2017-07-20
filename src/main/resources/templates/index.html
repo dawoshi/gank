@@ -1,32 +1,140 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh-CN">
 <head>
-    <meta charset="UTF-8"/>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1"/>
+
+    <meta charset="UTF-8">
     <title>首页</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="localhost:8080/layui/css/layui.css"/>
+    <style>
+		.title{
+			font-size:32px;
+			color:black;
+			text-align: center;
+            margin-top: 60px;
+            margin-bottom: 40px;
+		}
+        .main{
+            margin-top: 20px;
+			min-height:600px;
+		}
+		.article{
+            margin: 20px auto;
+			width:690px;
+		}
+		.article h4{
+			color:blue;
+		}
+		.article p{
+			font-size:4px;
+		}
+        .hot_s a {
+            margin: 0px 0.4em;
+        }
+    </style><link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
 <body>
-<div class="container">
-    <div class="header"></div>
-    <div class="search">
-        <button class="layui-btn layui-btn-normal">一个标准的按钮</button>
+
+<div id="content" class="container">
+	<div class="title">
+		<span>王者荣耀资讯订阅站点</span>
+	</div>
+    <div style="text-align: center">
+        <form class="form-horizontal" action="search/" method="get" role="form">
+            <div class="form-group">
+                <div class="row">
+
+                    <input autocomplete="off" style="height: 2.5em;border-width: 2px;width: 50%"
+                           id="search_input" name="q" type="text" placeholder="在此输入您想要搜索的资讯">
+
+                    <button style="background-color: green;border-width: 0px;height: 2.5em;width: 6em;"  	
+                           class=""><span style="color:#ffffff">搜索一下</span></button>
+                </div>
+            </div>
+        </form>
     </div>
-    <div class="main">
-        <div style="margin-top: 8px;">
-            <a href="#"><span style="color: blue"><h4>王者荣耀最新攻略集锦</h4></span></a>
-            <p>气温都i去外地his的哦啊三地哦啊号佛i撒挥发发黑随哦大幅回升udfuhsdfuudsfuisdgfu</p>
-        </div>
+
+    <div class="hot_s" style="text-align: center;margin-top: 20px">
+            <span>最近热词:</span>
+            <a href="/search/?q=Java">凯</a><a href="/search/?q=大数据">老夫子</a><a href="/search/?q=Python">花木兰</a>
+    </div>
+	<div class="main">
+		<div class="article">
+			<h4>
+				<a href="#">却无法区分分斯蒂芬斯蒂芬</a>
+			</h4>
+			<p>来源：17173 作者：小小白 </p>
+			<article>
+				去污粉 个人刚刚好恢复搞活飞过海发挥好风光好风光好风光好风光好风光分共和国海岛风光好风光好风光好风光好风光好飞过海法国恢复赛倒萨但是但是但是
+			</article>
+		</div>
+		<div class="article">
+			<h4>
+				<a href="#">却无法区分分斯蒂芬斯蒂芬</a>
+			</h4>
+			<p>来源：17173 作者：小小白 </p>
+			<article>
+				风光好风光好认同和回国后如何贴合人体会互相关怀个好风光好风光是光分共和国海岛风光好风光好风光好风光好风光好飞过海法国恢复赛倒萨但是但光分共和国海岛风光好风光好风光好风光好风光好飞过海法国恢复赛倒萨但是但光分共和国海岛风光好风光好风光好风光好风光好飞过海法国恢复赛倒萨但是但光分共和国海岛风光好风光好风光好风光好风光好飞过海法国恢复赛倒萨但是但光分共和国海岛风光好风光好风光好风光好风光好飞过海法国恢复赛倒萨但是但
+			</article>
+		</div>
+		<div class="article">
+			<h4>
+				<a href="#">却无法区分分斯蒂芬斯蒂芬</a>
+			</h4>
+			<p>来源：17173 作者：小小白 </p>
+			<article>
+				阿斯达斯大苏打无情的撒旦无情的权威的无情的权威使大赛倒萨但是但是但是阿斯达万吨我期待
+			</article>
+		</div>
+		<div class="article">
+			<h4>
+				<a href="#">却无法区分分斯蒂芬斯蒂芬</a>
+			</h4>
+			<p>来源：17173 作者：小小白 </p>
+			<article>
+				阿斯达斯大苏打无情的撒旦无情的权威的无情的权威使大赛倒萨但是但是但是阿斯达万吨我期待
+			</article>
+		</div>
+		<div class="article">
+			<h4>
+				<a href="#">却无法区分分斯蒂芬斯蒂芬</a>
+			</h4>
+			<p>来源：17173 作者：小小白 </p>
+			<article>
+				阿斯达斯大苏打无情的撒旦无情的权威的无情的权威使大赛倒萨但是但是但是阿斯达万吨我期待
+			</article>
+		</div>
+		<div class="article">
+			<h4>
+				<a href="#">却无法区分分斯蒂芬斯蒂芬</a>
+			</h4>
+			<p>来源：17173 作者：小小白 </p>
+			<article>
+				风光好风光好认同和回国后如何贴合人体会互相关怀个好风光好风光是光分共和国海岛风光好风光好风光好风光好风光好飞过海法国恢复赛倒萨但是但光分共和国海岛风光好风光好风光好风光好风光好飞过海法国恢复赛倒萨但是但光分共和国海岛风光好风光好风光好风光好风光好飞过海法国恢复赛倒萨但是但光分共和国海岛风光好风光好风光好风光好风光好飞过海法国恢复赛倒萨但是但光分共和国海岛风光好风光好风光好风光好风光好飞过海法国恢复赛倒萨但是但
+			</article>
+		</div>
+		
+	</div>
+    <div class="copyright" style="text-align: center;margin-top: 20px">
+        <p>本站仅提供资讯链接和订阅服务，不存放任何实质内容。如有侵权，请及时发送消息至chenmutime@outlook.com，必将及时撤除所有相关信息。</p>
     </div>
 </div>
-
 </body>
-<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
-<script src="locahost:8080/layui/layui.js"/>
-<script>
-    $(document).ready(function(){
+<script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
-    });
-</script>
+    <script>
+        $(function () {
+            var suggest_url = "{% url 'search_suggest' %}"
+            $("#search_input").bind("input propertychange", function () {
+                var keyword = $(this).val()
+                $.get(suggest_url, {"s": keyword}, function (data) {
+                    $("#search_input").typeahead({source: data});
+                }, 'json');
+
+            })
+        })
+    </script>
 </html>
