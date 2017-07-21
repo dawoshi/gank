@@ -13,4 +13,6 @@ public class CommonProperties {
 
     public final static String TYPE_USER = "user";
 
+    public final static Integer CODE = 9106;
+
 }

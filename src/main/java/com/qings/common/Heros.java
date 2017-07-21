@@ -14,6 +14,6 @@ public class Heros {
     static {
         heros.add("花木兰");
         heros.add("凯");
-        heros.add("菜文姬");
+        heros.add("蔡文姬");
     }
 }

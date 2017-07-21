@@ -16,12 +16,7 @@ import java.util.UUID;
  */
 public class CustomPipeline implements Pipeline {
 
-    private ArticleDao articleDao;
     private ArticleRepository articleRepository;
-
-    public CustomPipeline(ArticleDao articleDao){
-        this.articleDao = articleDao;
-    }
 
     public CustomPipeline(ArticleRepository articleRepository){
         this.articleRepository = articleRepository;
@@ -41,7 +36,6 @@ public class CustomPipeline implements Pipeline {
         article.setSitename(resultItems.get("site_name"));
         article.setUrl(resultItems.get("url"));
         article.setCreated(new Date());
-//        articleDao.save(article);
         articleRepository.save(article);
     }
 }

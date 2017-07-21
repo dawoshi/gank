@@ -36,6 +36,5 @@ public class TaskSerivce {
     public void taskHeroList(){
         logger.info("刷新热门英雄榜");
         HttpUtil.get(CommonProperties.APP_URL+"/hotheros");
-
     }
 }

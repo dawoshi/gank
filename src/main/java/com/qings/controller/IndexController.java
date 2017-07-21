@@ -12,6 +12,7 @@ import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.index.query.*;
+import org.elasticsearch.index.search.MatchQuery;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.highlight.HighlightBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.SearchResultMapper;
 import org.springframework.data.elasticsearch.core.aggregation.AggregatedPage;
 import org.springframework.data.elasticsearch.core.aggregation.impl.AggregatedPageImpl;
+import org.springframework.data.elasticsearch.core.query.DeleteQuery;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.data.elasticsearch.core.query.SearchQuery;
@@ -51,28 +53,47 @@ public class IndexController {
 
     @RequestMapping("index")
     public String index(){
+
         return "index";
+    }
+
+    @RequestMapping("delete")
+    @ResponseBody
+    public ApiResponse delSource(@RequestParam(value = "q", defaultValue = "")String param,@RequestParam(value = "code", defaultValue = "0")Integer code){
+        ApiResponse apiResponse = new ApiResponse();
+        if(StringUtils.isBlank(param) || !CommonProperties.CODE.equals(code)){
+            apiResponse.setCode(4002);
+        }else{
+            if(CommonProperties.CODE.equals(code)){
+                MatchQueryBuilder matchQuery = QueryBuilders.matchQuery(param,"sitename");
+                DeleteQuery deleteQuery = new DeleteQuery();
+                deleteQuery.setQuery(matchQuery);
+                elasticsearchTemplate.delete(deleteQuery, Article.class);
+            }
+            apiResponse.setCode(2000);
+        }
+        return apiResponse;
     }
 
     @RequestMapping("find")
     @ResponseBody
-    public ApiResponse findInformation(@RequestParam(value = "param", defaultValue = "")String param, @RequestParam(value = "cursor", defaultValue = "0")Integer cursor){
+    public ApiResponse findInformation(@RequestParam(value = "q", defaultValue = "")String param, @RequestParam(value = "c", defaultValue = "0")Integer cursor){
         ApiResponse apiResponse = new ApiResponse();
         Page<Article> resultPage;
         if(StringUtils.isBlank(param.trim())){
             resultPage = articleRepository.findAll(new PageRequest(cursor*MAX_RESULT,MAX_RESULT, Sort.Direction.DESC,"publish"));
         }else{
             HighlightBuilder.Field field1 = new HighlightBuilder.Field("introduction");
-            field1.preTags("<span style=\"font-color:red;\">");
+            field1.preTags("<span style=\"color:red;\">");
             field1.postTags("</span>");
             HighlightBuilder.Field field2 = new HighlightBuilder.Field("title");
-            field2.preTags("<span style=\"font-color:red;\">");
+            field2.preTags("<span style=\"color:red;\">");
             field2.postTags("</span>");
             HighlightBuilder.Field field3 = new HighlightBuilder.Field("author");
-            field3.preTags("<span style=\"font-color:red;\">");
+            field3.preTags("<span style=\"color:red;\">");
             field3.postTags("</span>");
             HighlightBuilder.Field field4 = new HighlightBuilder.Field("sitename");
-            field4.preTags("<span style=\"font-color:red;\">");
+            field4.preTags("<span style=\"color:red;\">");
             field4.postTags("</span>");
             MultiMatchQueryBuilder query = QueryBuilders.multiMatchQuery(param,"introduction","title","author","sitename");
             NativeSearchQuery searchQuery = (new NativeSearchQueryBuilder()).withQuery(query)
@@ -82,13 +103,12 @@ public class IndexController {
         }
         if(null != resultPage && !resultPage.getContent().isEmpty()){
             List<Article> articleList = resultPage.getContent();
-            apiResponse.setCount(resultPage.getNumber());
+            apiResponse.setCount(resultPage.getContent().size());
             apiResponse.setList(new ArrayList<>(articleList));
             apiResponse.setPages(resultPage.getTotalPages());
             if(resultPage.hasNext()) apiResponse.setCursor(cursor+1);
             return apiResponse;
         }
-        apiResponse.setCode(200);
         apiResponse.setCount(0);
         return apiResponse;
     }
@@ -102,7 +122,7 @@ public class IndexController {
             return apiResponse;
         }
         HighlightBuilder.Field field1 = new HighlightBuilder.Field("title");
-        field1.preTags("<span style=\"font-color:red;\">");
+        field1.preTags("<span style=\"color:red;\">");
         field1.postTags("</span>");
         MatchQueryBuilder matchQuery = QueryBuilders.matchQuery("title",param);
         NativeSearchQuery searchQuery = (new NativeSearchQueryBuilder()).withQuery(matchQuery)
@@ -157,6 +177,7 @@ public class IndexController {
             heroList.addAll(resultList);
         }
         apiResponse.setList(new ArrayList<>(resultList));
+        apiResponse.setCount(resultList.size());
         return apiResponse;
     }
 
