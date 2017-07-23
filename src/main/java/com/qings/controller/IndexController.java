@@ -9,6 +9,8 @@ import com.qings.elasticsearch.documents.User;
 import com.qings.elasticsearch.repository.ArticleRepository;
 import com.qings.elasticsearch.repository.UserRepository;
 import org.apache.commons.collections.map.HashedMap;
+import org.apache.commons.lang.time.DateFormatUtils;
+import org.apache.commons.lang.time.DateUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.index.query.*;
@@ -230,7 +232,7 @@ public class IndexController {
                     article.setId(hit.getId());
                     article.setAuthor(hit.getHighlightFields().containsKey("author")?hit.getHighlightFields().get("author").fragments()[0].toString():hit.getSource().get("author").toString());
                     article.setIntroduction(hit.getHighlightFields().containsKey("introduction")?hit.getHighlightFields().get("introduction").fragments()[0].toString():hit.getSource().get("introduction").toString());
-                    article.setPublish(hit.getSource().get("publish").toString());
+                    article.setPublish(new Date(Long.valueOf(hit.getSource().get("publish").toString())));
                     article.setSitename(hit.getHighlightFields().containsKey("sitename")?hit.getHighlightFields().get("sitename").fragments()[0].toString():hit.getSource().get("sitename").toString());
                     article.setTitle(hit.getHighlightFields().containsKey("title")?hit.getHighlightFields().get("title").fragments()[0].toString():hit.getSource().get("title").toString());
                     article.setUrl(hit.getSource().get("url").toString());

@@ -21,14 +21,22 @@ public class Article {
     private String title;
     @Field(type = FieldType.String, index = FieldIndex.analyzed,store = true)
     private String author;
-    @Field(type = FieldType.String, index = FieldIndex.no,store = true)
-    private String publish;
+    @Field(type = FieldType.Date, index = FieldIndex.no,store = true)
+    private Date publish;
     @Field(type = FieldType.String, index = FieldIndex.analyzed,store = true,analyzer = "ik_max_word")
     private String introduction;
     @Field(type = FieldType.Date, index = FieldIndex.no,store = true)
     private Date created;
     @Field(type = FieldType.String, index = FieldIndex.no,store = true)
     private String url;
+
+    public Date getPublish() {
+        return publish;
+    }
+
+    public void setPublish(Date publish) {
+        this.publish = publish;
+    }
 
     public String getIntroduction() {
         return introduction;
@@ -68,14 +76,6 @@ public class Article {
 
     public void setAuthor(String author) {
         this.author = author;
-    }
-
-    public String getPublish() {
-        return publish;
-    }
-
-    public void setPublish(String publish) {
-        this.publish = publish;
     }
 
     public String getUrl() {

@@ -4,6 +4,7 @@ import com.qings.robots.RobotsDisallowedException;
 import com.qings.robots.RobotsParser;
 import com.qings.site.common.SitePageProcessor;
 import org.apache.commons.lang3.time.DateFormatUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.apache.log4j.Logger;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
@@ -81,7 +82,7 @@ public class SeventeenPageProcessor extends SitePageProcessor implements PagePro
                         List<String> publishList = html.getDocument().getElementsByClass("gb-final-date").eachText();
                         List<String> authorList = html.getDocument().getElementsByClass("gb-final-author").eachText();
                         page.putField("introduction", !introList.isEmpty()?introList.get(0).replace("王者荣耀新闻导语 ", ""):null);
-                        page.putField("publish", !publishList.isEmpty()?publishList.get(0).replace("时间：", ""):null);
+                        page.putField("publish", !publishList.isEmpty()?DateUtils.parseDate(publishList.get(0).replace("时间：", ""),"yyyy-MM-dd HH:mm"):null);
                         page.putField("author", !authorList.isEmpty()?authorList.get(0).replace("作者：", ""):null);
                     }catch (Exception e){
                         logger.error(e);
