@@ -1,7 +1,6 @@
 package com.qings.service;
 
 import com.qings.common.CommonProperties;
-import com.qings.dao.ArticleDao;
 import com.qings.elasticsearch.repository.ArticleRepository;
 import com.qings.site.SeventeenPageProcessor;
 import com.qings.site.common.CustomPipeline;

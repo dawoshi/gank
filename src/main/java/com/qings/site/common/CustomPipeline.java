@@ -1,6 +1,5 @@
 package com.qings.site.common;
 
-import com.qings.dao.ArticleDao;
 import com.qings.elasticsearch.documents.Article;
 import com.qings.elasticsearch.repository.ArticleRepository;
 import org.apache.commons.lang.StringUtils;

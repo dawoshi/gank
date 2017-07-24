@@ -121,13 +121,13 @@ public class IndexController {
             apiResponse.setCount(0);
             return apiResponse;
         }
-        HighlightBuilder.Field field1 = new HighlightBuilder.Field("title");
+        HighlightBuilder.Field field1 = new HighlightBuilder.Field("introduction");
         field1.preTags("<span style=\"color:red;\">");
         field1.postTags("</span>");
-        MatchQueryBuilder matchQuery = QueryBuilders.matchQuery("title",param);
-        NativeSearchQuery searchQuery = (new NativeSearchQueryBuilder()).withQuery(matchQuery)
+        MatchQueryBuilder matchQuery = QueryBuilders.matchQuery("introduction",param);
+        NativeSearchQuery searchQuery = (new NativeSearchQueryBuilder()).withQuery(QueryBuilders.boolQuery().mustNot(matchQuery))
                 .withHighlightFields(field1)
-                .withPageable(new PageRequest(0,MAX_RESULT, Sort.Direction.DESC,"publish")).build();
+                .withPageable(new PageRequest(0,100, Sort.Direction.DESC,"publish")).build();
         Page<Article> resultPage = queryForPage(searchQuery);
         apiResponse.setCount(resultPage.getNumber());
         apiResponse.setList(new ArrayList<>(resultPage.getContent()));
