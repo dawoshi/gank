@@ -42,7 +42,6 @@ import java.util.*;
 @Controller
 public class IndexController {
 
-
     private final int MAX_RESULT = 10;
     @Autowired
     private ArticleRepository articleRepository;

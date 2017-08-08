@@ -1,9 +1,9 @@
 package com.qings.elasticsearch.documents;
 
 import com.qings.common.CommonProperties;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.*;
 
-import javax.persistence.Id;
 import java.util.Date;
 
 /**

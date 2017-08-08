@@ -4,11 +4,11 @@ spring:
     elasticsearch: #ElasticsearchProperties
         cluster-name: elasticsearch #默认即为elasticsearch
         cluster-nodes: 127.0.0.1:9300
-  datasource:
-    url: jdbc:mysql://127.0.0.1:3306/gank
-    username: root
-    password: root
-    driver-class-name: com.mysql.jdbc.Driver
+#  datasource:
+#    url: jdbc:mysql://127.0.0.1:3306/gank
+#    username: root
+#    password: root
+#    driver-class-name: com.mysql.jdbc.Driver
   thymeleaf:
     mode: HTML5
   #字符集和json格式工具
