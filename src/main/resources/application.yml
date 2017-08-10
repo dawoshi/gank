@@ -3,7 +3,7 @@ spring:
   data:
     elasticsearch: #ElasticsearchProperties
         cluster-name: elasticsearch #默认即为elasticsearch
-        cluster-nodes: 127.0.0.1:9300
+        cluster-nodes: 47.52.117.64:9300
 #  datasource:
 #    url: jdbc:mysql://127.0.0.1:3306/gank
 #    username: root
